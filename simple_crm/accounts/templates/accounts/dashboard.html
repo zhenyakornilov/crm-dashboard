@@ -23,7 +23,7 @@
               </tr>
               {% for customer in customers %}
               <tr>
-                <td><a class="btn btn-sm btn-info" href="{% url 'customer' customer.id%}">View</a></td>
+                <td><a class="btn btn-sm btn-info" href="{% url 'customer' customer.slug %}">View</a></td>
                 <td>{{ customer.name}}</td>
                 <td>{{ customer.phone}}</td>
               </tr>
@@ -53,7 +53,7 @@
                 <td>{{ order.status}}</td>
                 <td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
                 <td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}" data-bs-toggle="modal"
-                       data-bs-target="#confirmation_window" onclick="delete_user(this)">Delete</a>
+                       data-bs-target="#confirmation_window" onclick="deleteUser(this)">Delete</a>
                 </td>
               </tr>
               {% include "accounts/modal_confirm_delete.html" %}

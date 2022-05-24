@@ -11,5 +11,4 @@ class OrderForm(ModelForm):
             'customer': forms.TextInput(attrs={'class': 'form-control'}),
             'product': forms.TextInput(attrs={'class': 'from-control'}),
             'date_created': forms.SelectDateWidget(attrs={'class': 'form-control'}),
-
         }

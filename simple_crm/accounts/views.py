@@ -3,16 +3,15 @@ from django.forms import inlineformset_factory
 from .models import Product, Order, Customer
 from .forms import OrderForm
 from .filters import OrderFilter
-from django.http import HttpResponse
 
 
 def home(request):
-    orders = Order.objects.all()
+    orders = Order.objects.all()[0:5]
     customers = Customer.objects.all()
 
     total_orders = orders.count()
-    orders_delivered = orders.filter(status='Delivered').count()
-    orders_pending = orders.filter(status='Pending').count()
+    orders_delivered = Order.objects.filter(status='Delivered').count()
+    orders_pending = Order.objects.filter(status='Pending').count()
 
     context = {
         'orders': orders,
@@ -28,8 +27,8 @@ def products(request):
     return render(request, 'accounts/products.html', {'products': products})
 
 
-def customer(request, pk):
-    customer = get_object_or_404(Customer, id=pk)
+def customer(request, slug):
+    customer = get_object_or_404(Customer, slug=slug)
     orders = customer.order_set.all()
     order_count = orders.count()
 
@@ -40,9 +39,9 @@ def customer(request, pk):
     return render(request, 'accounts/customers.html', context=context)
 
 
-def create_order(request, pk):
-    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status'), extra=6)
-    customer = get_object_or_404(Customer, id=pk)
+def create_order(request, slug):
+    OrderFormSet = inlineformset_factory(Customer, Order, fields=('product', 'status'), extra=6, can_delete=False)
+    customer = get_object_or_404(Customer, slug=slug)
     formset = OrderFormSet(queryset=Order.objects.none(), instance=customer)
 
     if request.method == 'POST':

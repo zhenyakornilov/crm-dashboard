@@ -11,7 +11,7 @@
             <hr>
             <div class="d-grid gap-2">
               <a class="btn btn-outline-info btn-sm" href="">Update Customer</a>
-              <a class="btn btn-outline-info btn-sm" href="{% url 'create_order' customer.id %}">Place Order</a>
+              <a class="btn btn-outline-info btn-sm" href="{% url 'create_order' customer.slug %}">Place Order</a>
             </div>
           </div>
         </div>
@@ -40,20 +40,20 @@
     <form method="get">
       <div class="row mt-5">
         <div class="col-md-3">
-          <label for="filter-product" class="form-label">Product</label>
-          {% render_field filter.form.product class="form-control" id="filter-product" %}
+          <label for="{{ filter.form.product.auto_id }}" class="form-label">Product</label>
+          {% render_field filter.form.product class="form-control" %}
         </div>
         <div class="col-md-3">
-          <label for="filter-status" class="form-label">Status</label>
-          {% render_field filter.form.status class="form-control" id="filter-status" %}
+          <label for="{{ filter.form.status.auto_id }}" class="form-label">Status</label>
+          {% render_field filter.form.status class="form-control" %}
         </div>
         <div class="col-md-3">
-          <label for="filter-start-date" class="form-label">Start Date</label>
-          {% render_field filter.form.start_date class="form-control" id="filter-start-date" %}
+          <label for="{{ filter.form.start_date.auto_id }}" class="form-label">Start Date</label>
+          {% render_field filter.form.start_date class="form-control" %}
         </div>
         <div class="col-md-3">
-          <label for="filter-end-date" class="form-label">End Date</label>
-          {% render_field filter.form.end_date class="form-control" id="filter-end-date" %}
+          <label for="{{ filter.form.end_date.auto_id }}" class="form-label">End Date</label>
+          {% render_field filter.form.end_date class="form-control" %}
         </div>
         <div class="col-md-2 mt-2">
           <div class="d-grid gap-2">

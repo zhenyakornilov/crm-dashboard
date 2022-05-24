@@ -1,5 +1,6 @@
 {% extends 'accounts/main.html' %}
 {% load static %}
+{% load widget_tweaks %}
 {% block content %}
 
 <div class="container-fluid mt-2">
@@ -9,12 +10,24 @@
         <div class="card-body">
           <form action="" method="post">
             {% csrf_token %}
-            {{ formset.management_form}}
+            {{ formset.management_form }}
             {% for form in formset %}
-              {{ form }}
-              <hr>
+            <div class="row">
+              <div class="col">
+                <label for="{{ form.product.auto_id }}" class="form-label">Product</label>
+                {% render_field form.product class="form-control" %}
+              </div>
+              <div class="col">
+                <label for="{{ form.status.auto_id }}" class="form-label">Status</label>
+                {% render_field form.status class="form-control"%}
+              </div>
+            </div>
             {% endfor %}
-            <input type="submit" name="Submit">
+            <div class="row">
+              <div class="col mt-3">
+                <button class="btn btn-info" type="submit" name="Submit">Submit</button>
+              </div>
+            </div>
           </form>
         </div>
       </div>

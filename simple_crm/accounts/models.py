@@ -1,14 +1,22 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 
 
 class Customer(models.Model):
     name = models.CharField(max_length=200, null=True)
     phone = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True, blank=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
+    slug = models.SlugField(max_length=200, null=False, unique=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        super(Customer, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = slugify(self.name) + "-" + str(self.pk)
+            self.save()
 
 
 class Tag(models.Model):
@@ -46,4 +54,7 @@ class Order(models.Model):
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=200, null=True, choices=STATUS)
+
+
+
 
